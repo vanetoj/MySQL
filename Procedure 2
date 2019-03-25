@@ -1,0 +1,25 @@
+USE massageStudio1;
+
+DELIMITER $$
+
+#DROP PROCEDURE IF EXISTS `schedule_apptmnt` ( starts      datetime,
+#ends       datetime)
+
+
+CREATE PROCEDURE `schedule_apptmnt`(starts datetime)
+
+BEGIN
+   select t.essn, t.firstname, t.lastname
+   from therapists1  t   
+   left join appointments a 
+   on (t.essn=a.essn)
+   where a.starts = starts ;
+end
+	
+
+
+ $$
+
+DELIMITER ;
+
+call schedule_apptmnt(' 2011-12-18 11:00:00');
