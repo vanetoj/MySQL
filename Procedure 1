@@ -1,0 +1,25 @@
+BEGIN
+
+    IF (type IS NOT NULL) THEN
+    BEGIN
+    SELECT * 
+FROM therapists1
+             LEFT JOIN typesofmassage1 on typesofmassage1.essn = therapists1.essn
+WHERE typesofmassage1.type = type;
+END;
+    ELSE
+    BEGIN 
+    SELECT * 
+FROM therapists1;
+    END;
+    END IF;
+
+END //
+DELIMITER ;
+
+
+call  find_therapist_for_type_of_massage('reflexology');
+#call  find_therapist_for_type_of_massage(null);
+
+
+                    
