@@ -1,0 +1,85 @@
+create schema massageStudio1;
+
+create TABLE therapists1 (
+essn INT NOT NULL,
+FirstName VARCHAR(15) NOT NULL,
+LastName varchar(25) not null,
+zip int not null,
+gender  varchar(15) not NULL,
+PRIMARY KEY (essn));
+
+create table typesOfMassage1(
+    type varchar(20) not null,
+    essn INT NOT NULL,
+    PRIMARY KEY (type,essn),
+    foreign key (essn) references therapists1(essn));
+     
+
+create table clients1(
+    ClientId int not null AUTO_INCREMENT,
+    FirstName varchar (15),
+    LastName varchar (25),
+    gender varchar (10),
+	painLevel int ,
+    zip int not null,
+    primary key (clientId));
+    
+ 
+create TABLE APPOINTMENTS (essn int not null, 
+clientid int not null,
+starts      datetime,
+ends       datetime,
+primary key(essn, clientid),  
+foreign key (essn) references therapists1(essn),
+ foreign key (clientid) references clients1(clientid));
+
+insert into appointments (essn,clientid, starts, ends) values (12345,1,' 2011-12-18 11:00:00','2011-12-18 12:00:00');
+    
+insert into therapists1 (essn,firstname,lastname,zip,gender) values (12345, 'peter','andrew',64112, 'male');
+insert into therapists1 (essn,firstname,lastname,zip,gender) values (12346, 'vesela','ivanova',66212, 'female');
+insert into therapists1 (essn,firstname,lastname,zip,gender) values (12347, 'fanny','mandel',64111, 'female');
+insert into therapists1 (essn,firstname,lastname,zip,gender) values (12348, 'john','long',64138, 'male');
+insert into therapists1 (essn,firstname,lastname,zip,gender) values (12349, 'jessica','jones',66214, 'female');
+
+
+insert into typesOfMassage1(type,essn) values ('deep tissue', 12345);
+insert into typesOfMassage1(type, essn) values ('swedish', 12345);
+insert into typesOfMassage1(type, essn) values ('swedish', 12346);
+insert into typesOfMassage1(type, essn) values ('shiatsu', 12346);
+insert into typesOfMassage1(type, essn) values ('reflexology', 12347);
+insert into typesOfMassage1(type, essn) values ('deep tissue', 12347);
+insert into typesOfMassage1(type, essn) values ('aromatherapy', 12348);
+insert into typesOfMassage1(type, essn) values ('reflexology', 12348);
+insert into typesOfMassage1(type, essn) values ('shiatsu', 12349);
+insert into typesOfMassage1(type, essn) values ('aromatherapy', 12349);
+
+select * from clients1;
+
+select count(distinct essn)
+from therapists1;
+
+
+
+
+select t.essn, t.firstname, t.lastname
+from therapists1  t   
+left join appointments a 
+on (t.essn=a.essn)
+where starts  is null;
+
+
+select t.essn, t.firstname,t.lastname 
+from therapists1 t
+join clients1 c
+on (t.zip=c.zip);
+
+
+insert into appointments (essn,clientid, starts, ends) values (12346, 3,' 2011-12-18 11:00:00',' 2011-12-18 12:00:00');
+
+
+
+
+insert into clients1(ClientId,FirstName,LastName,gender,painLevel,zip) values (1,'peter','fonda','male',3,64110);
+insert into clients1(ClientId,FirstName,LastName,gender,painLevel,zip) values (null,'irina','dicheva','female',8,64000);
+
+
